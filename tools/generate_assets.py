@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate Kinetica dictionary assets.
 
-Produces, per language (--lang en|it|es|pl|cs|nl|de|fr|no|ro|ru|he|ar|uk, default en):
+Produces, per language (--lang en|it|es|pl|cs|nl|de|fr|no|ro|pt|ru|he|ar|uk, default en):
   app/src/main/assets/dictionaries/<lang>_wordlist.txt   (word TAB freq)
   app/src/main/assets/dictionaries/<lang>_bigrams.txt    (w1 TAB w2 TAB freq)
 
@@ -91,6 +91,10 @@ WORD_RE = {
     # native apostrophe use, but the shared shape keeps loan contractions
     # loadable.
     "ro": re.compile(r"^[a-zăâîșț]+(?:'[a-zăâîșț]+)*$"),
+    # European Portuguese: acute, grave (à), circumflex and tilde vowels, and
+    # cedilla c. ü is pre-1990 and Brazilian but still turns up in names and
+    # loans. No native apostrophe use; the shared shape keeps loans loadable.
+    "pt": re.compile(r"^[a-záàâãéêíóôõúüç]+(?:'[a-záàâãéêíóôõúüç]+)*$"),
     # Russian: the 33 letters, ё included (it folds onto е at load). No apostrophe;
     # hyphenated forms (кто-то) are left out, as the Latin lists leave theirs.
     "ru": re.compile(r"^[а-яё]+$"),
@@ -134,6 +138,7 @@ TATOEBA_LANG_CODE = {
     # Czech, so Norwegian ships a bigram table roughly a tenth the usual size.
     "no": "nob",
     "ro": "ron",
+    "pt": "por",
     "ru": "rus", "he": "heb", "ar": "ara", "uk": "ukr",
 }
 
@@ -667,14 +672,14 @@ def check_ukrainian_controls(rows: list[tuple[str, int]]) -> list[str]:
 
 
 # ---------------------------------------------------------------------------
-# Diacritics (it, pl, es, cs, fr, de, nl, no)
+# Diacritics (it, pl, es, cs, fr, de, nl, no, ro, pt)
 # ---------------------------------------------------------------------------
 # Subtitle lists carry spellings with the accents left off, as words: Polish `sie`
 # 87 050 beside `się`, Italian `perche` 489 341 against `perché` 417 508. Folded onto
 # the accented word's trie node they are offered, and can lead. Subtitle counts cannot
 # tell them from real pairs (`ze`/`że`, `e`/`è`), so written use decides: Tatoeba's
 # sentences for the language, counted by exact spelling. Folding mirrors AccentFolder.
-DIACRITIC_LANGS = ("it", "pl", "es", "cs", "fr", "de", "nl", "no", "ro")
+DIACRITIC_LANGS = ("it", "pl", "es", "cs", "fr", "de", "nl", "no", "ro", "pt")
 _FOLD = str.maketrans({
     ch: base
     for chars, base in (
@@ -722,6 +727,11 @@ DIACRITIC_CONTROL_KEEP = {
     # pana (the feather) beside până (until) and pană (feather), sa (his/her)
     # beside să, and asta (this, colloquial) beside ăsta.
     "ro": ("casa", "fata", "masa", "seara", "par", "var", "tine", "pana", "sa", "asta"),
+    # Plain spellings that are words beside an accented one: e (and) / é (is),
+    # esta (this) / está (is), por (by) / pôr (to put), para (for) / pára,
+    # pais (parents) / país (country), da / dá, de / dê, nos (us) / nós (we),
+    # mas (but) / más (bad), se (if) / sé (see).
+    "pt": ("e", "esta", "por", "para", "pais", "da", "de", "nos", "mas", "se"),
 }
 DIACRITIC_CONTROL_DROP = {
     "it": ("perche", "piu", "gia", "cosi", "puo", "cioe", "percio", "tornero"),
@@ -733,6 +743,7 @@ DIACRITIC_CONTROL_DROP = {
     "nl": ("ideeen", "italie"),
     "no": ("pa", "ma", "na", "fa", "ogsa", "forste"),
     "ro": ("si", "in", "maine", "fara", "cand", "atat", "sti", "baiat", "masina", "asa"),
+    "pt": ("nao", "voce", "entao", "tambem", "ja", "ate", "sera", "estao", "mae", "irmao"),
 }
 
 
@@ -1063,7 +1074,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--lang",
-        choices=("en", "it", "es", "pl", "cs", "nl", "de", "fr", "no", "ro", "ru", "he", "ar", "uk"),
+        choices=("en", "it", "es", "pl", "cs", "nl", "de", "fr", "no", "ro", "pt", "ru", "he", "ar", "uk"),
         default="en",
     )
     parser.add_argument(

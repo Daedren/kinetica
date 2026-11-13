@@ -20,9 +20,9 @@ Features
   any order; one tap can stand for a double letter
 * Long words in one stroke or two thumbs, up to 40 letters, learned as you
   write them
-* English, Italian, Spanish, Polish, Czech, Dutch, German, French, Norwegian
-  and Romanian, plus Russian, Ukrainian, Hebrew and Arabic as experimental: 46k
-  to 50k words per language with real corpus frequencies. Accented words are
+* English, Italian, Spanish, Polish, Czech, Dutch, German, French, Norwegian,
+  Romanian and Portuguese (Portugal), plus Russian, Ukrainian, Hebrew and
+  Arabic as experimental: 43k to 50k words per language with real corpus frequencies. Accented words are
   drawn on their base keys and restored on commit
 * Several languages at once: mix two in the suggestions, or let the keyboard
   follow the language you are typing, each word learned into its own

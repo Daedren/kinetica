@@ -11,7 +11,7 @@ import org.junit.Assume.assumeTrue
  */
 object EmojiAssetFiles {
 
-    val LANGS = listOf("en", "it", "es", "pl", "cs", "nl", "de", "fr", "no", "ro", "ru", "he", "ar", "uk")
+    val LANGS = listOf("en", "it", "es", "pl", "cs", "nl", "de", "fr", "no", "ro", "pt", "ru", "he", "ar", "uk")
 
     fun path(name: String): Path {
         val direct = Paths.get("src/main/assets/emoji/$name")

@@ -37,7 +37,7 @@ import sys
 import urllib.request
 from pathlib import Path
 
-LANGS = ("en", "it", "es", "pl", "cs", "nl", "de", "fr", "no", "ro", "ru", "he", "ar", "uk")
+LANGS = ("en", "it", "es", "pl", "cs", "nl", "de", "fr", "no", "ro", "pt", "ru", "he", "ar", "uk")
 
 EMOJI_TEST_URL = "https://www.unicode.org/Public/emoji/16.0/emoji-test.txt"
 EMOJI_TEST_SHA256 = "24f0c534e86cf142e2496953e8f0e46a3e702392911eddcd29c6cced85139697"

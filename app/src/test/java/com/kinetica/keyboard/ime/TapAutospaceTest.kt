@@ -95,6 +95,23 @@ class TapAutospaceTest {
     }
 
     @Test
+    fun portugueseSingleLetterWordsAutospaceWithoutAdmittingDictionaryNoise() {
+        // The English fallback spaces a/i: it would lose Portuguese e and o and
+        // space a lone i mid-word.
+        for (letter in 'a'..'z') {
+            assertEquals(
+                "Portuguese '$letter' autospace",
+                letter in "aeo",
+                fires(
+                    literal = letter.toString(),
+                    literalIsWord = true,
+                    literalIsStandaloneLetter = StandaloneLetters.isWord(letter, "pt"),
+                ),
+            )
+        }
+    }
+
+    @Test
     fun aSingleLetterAfterAnApostropheStillRefuses() {
         // The joined branch comes first: the `a` of `dell'anno` follows an apostrophe, so it
         // never reaches the one-letter rule. It was the only premature fire on captured prose.

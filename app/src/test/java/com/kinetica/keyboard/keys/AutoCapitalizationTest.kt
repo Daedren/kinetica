@@ -28,12 +28,13 @@ class AutoCapitalizationTest {
         // it as a word, so the capitalization rule must still leave it alone.
         assertEquals("i", AutoCapitalization.forWord("i", "no"))
         assertEquals("i", AutoCapitalization.forWord("i", "ro"))
+        assertEquals("i", AutoCapitalization.forWord("i", "pt"))
         assertEquals("i", AutoCapitalization.forWord("i", ""))
     }
 
     @Test
     fun everyOtherWordIsUntouched() {
-        for (lang in listOf("en", "it", "es", "pl", "cs", "nl", "de", "fr", "no", "ro", "ru", "he", "ar")) {
+        for (lang in listOf("en", "it", "es", "pl", "cs", "nl", "de", "fr", "no", "ro", "pt", "ru", "he", "ar")) {
             for (w in listOf("in", "if", "is", "it", "ii", "a", "o", "island", "iowa", "")) {
                 assertEquals("$w changed under $lang", w, AutoCapitalization.forWord(w, lang))
             }

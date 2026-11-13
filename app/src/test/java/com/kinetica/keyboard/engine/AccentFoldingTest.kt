@@ -45,6 +45,13 @@ class AccentFoldingTest {
         assertEquals("si", AccentFolder.fold("şi"))
         assertEquals("caini", AccentFolder.fold("câini"))
         assertEquals("intrebare", AccentFolder.fold("întrebare"))
+        // Portuguese: tilde vowels (ã → a, õ → o), cedilla (ç → c), circumflex and grave.
+        assertEquals("nao", AccentFolder.fold("não"))
+        assertEquals("acao", AccentFolder.fold("ação"))
+        assertEquals("licoes", AccentFolder.fold("lições"))
+        assertEquals("voce", AccentFolder.fold("você"))
+        assertEquals("avo", AccentFolder.fold("avô"))
+        assertEquals("a", AccentFolder.fold("à"))
         val plain = "already plain"
         assertTrue(plain === AccentFolder.fold(plain))
     }

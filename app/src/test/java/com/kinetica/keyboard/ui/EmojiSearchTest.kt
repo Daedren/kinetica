@@ -103,4 +103,12 @@ class EmojiSearchTest {
         assertEquals("🔥", EmojiAssetFiles.top("foc", "ro", "en").first())
         assertTrue(firstScreen("cafea", "ro", "en").contains("☕"))
     }
+
+    @Test
+    fun portugueseFindsItsOwnWords() {
+        // Typed without accents, as a swipe or a quick tap leaves them.
+        assertTrue(firstScreen("coracao", "pt", "en").contains("❤️"))
+        assertEquals("🔥", EmojiAssetFiles.top("fogo", "pt", "en").first())
+        assertTrue(firstScreen("cafe", "pt", "en").contains("☕"))
+    }
 }

@@ -202,6 +202,25 @@ class DictionaryMergerTest {
     }
 
     @Test
+    fun portuguesePatternAdmitsAccentedWords() {
+        val aosp = """
+             word=não,f=200
+             word=também,f=180
+             word=ação,f=170
+             word=coração,f=160
+             word=señal,f=150
+        """.trimIndent()
+        val result = DictionaryMerger.merge(primary, reader(aosp), "pt")
+        val words = result.rows.map { it.first }
+        assertTrue(words.contains("não"))
+        assertTrue(words.contains("também"))
+        assertTrue(words.contains("ação"))
+        assertTrue(words.contains("coração"))
+        // Ñ is not Portuguese orthography: filtered on import.
+        assertFalse(words.contains("señal"))
+    }
+
+    @Test
     fun readPrimaryParsesTabSeparatedRows() {
         val rows = DictionaryMerger.readPrimary(reader("the\t1000\nbroken line\nof\t500\n"))
         assertEquals(listOf("the" to 1000, "of" to 500), rows)
